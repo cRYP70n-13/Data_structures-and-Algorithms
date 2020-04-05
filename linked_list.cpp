@@ -122,9 +122,9 @@ void	append(Node **head_ref, int new_data)
 
 	// 5. check if our linked list is impety if its the case add this node as the only one
 	if (*head_ref == NULL)
-       *head_ref = new_node; 
+       *head_ref = new_node;
 
-	// 6. traverse our linked list till the end 
+	// 6. traverse our linked list till the end
 	while (last->next != NULL)
 		last = last->next;
 
@@ -132,9 +132,41 @@ void	append(Node **head_ref, int new_data)
 	last->next = new_node;
 }
 
+// Trying to implement a function to delete a node in a linked list
+void	deleteNode(Node **head_ref, int key)
+{
+    // Store head node
+    struct Node* temp = *head_ref;
+	Node *prev = new Node();
+
+    // this is used to check if the head is the node we gonna delete
+    if (temp != NULL && temp->data == key)
+    {
+        *head_ref = temp->next;   // Change head to the next element
+        free(temp);               // free old head
+        return;
+    }
+
+    // Search for the key to be deleted, keep track of the
+    // previous node as we need to change 'prev->next'
+    while (temp != NULL && temp->data != key)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    // If key was not present in linked list
+    if (temp == NULL) return;
+
+    // Unlink the node from linked list
+    prev->next = temp->next;
+
+    free(temp);  // Free memory
+}
+
 int     main(void)
 {
-	// let's begin with creating tree nodes 
+	// let's begin with creating tree nodes
 	Node *head = NULL;
 	Node *second = NULL;
 	Node *three = NULL;
@@ -167,6 +199,9 @@ int     main(void)
 
 	// Insert an element after the third Node
 	insert_after(three, 18);
+
+	// Delete a node in our linked list
+	deleteNode(&head, 17);
 
 	print_linked_list(head);
 	return (0);
