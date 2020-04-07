@@ -1,7 +1,7 @@
 /**
- *       Linked list complete functions
- *       author: @cRYP70N
- *       date: 07/04/2020
+ * Linked list functions
+ * author: @cRYP70N
+ * date: 07/04/2020
  **/
 
 #include <cassert>
@@ -19,7 +19,6 @@
 #include <stdlib.h>
 
 using namespace std;
-// vector push_back push front top empty pop make_pair long long insert begin end
 typedef long long ll;
 typedef vector<int> vi;
 typedef vector<pair <int,int> > vpi;
@@ -144,7 +143,7 @@ void	deleteNode(Node **head_ref, int key)
 {
     // TODO is to go and recheck the linked lists in the books
     // Store head node
-    struct Node* temp = *head_ref;
+    Node *temp = *head_ref;
 	Node *prev = new Node();
 
     // this is used to check if the head is the node we gonna delete
@@ -260,19 +259,27 @@ int     count(Node *head, int item)
     return (i);
 }
 
-// Okay now m gonna try implement a function to swap two nodes in a given linked list
-void    swapNode(Node **head, int x, int y)
+// Okay now Also im gonna try to implement a function to reverse a linked list
+void    reverse_list(Node **head)
 {
-    Node *current = *head;
-    Node *tmp;
+    Node *prev = NULL, *next = NULL, *current = *head;
     while (current != NULL)
     {
-        if (current->data == x)
-    }
+        // now we need to store the address of the next node
+        next = current->next;
 
-    // To be honest this is a very hard problem i must revistit it later till i finish my work
-    // TODO Dont forget to came back to this function ==> we wont let it beats us
+        // and here we gonna move on to the previous node to reverse our list
+        current->next = prev;
+
+        // Here we should move our prev one step forward which is the current node
+        prev = current;
+
+        // and here we should move our current node to the next one which is the pointer next
+        current = next;
+    }
+    *head = prev;
 }
+
 int     main(void)
 {
 	// let's begin with creating tree nodes
@@ -311,6 +318,8 @@ int     main(void)
 
 	// Delete a node in our linked list
 	deleteNode(&head, 17);
+
+    //reverse_list(&head);
 
 	print_linked_list(head);
 	return (0);
