@@ -1,3 +1,10 @@
+/**
+ *       Linked list complete functions
+ *       author: @cRYP70N
+ *       date: 07/04/2020
+ **/
+
+#include <cassert>
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
@@ -98,7 +105,7 @@ void	insert_after(Node *prev_node, int new_data)
 	// 2. put the data in the new node
 	new_node->data = new_data;
 
-	// 3. Make the next of the new node to the next one
+	// 3. Make the pointer of the new node points to the next one
 	new_node->next = prev_node->next;
 
 	// 4. move the next of the prev node as new node
@@ -135,6 +142,7 @@ void	append(Node **head_ref, int new_data)
 // Trying to implement a function to delete a node in a linked list
 void	deleteNode(Node **head_ref, int key)
 {
+    // TODO is to go and recheck the linked lists in the books
     // Store head node
     struct Node* temp = *head_ref;
 	Node *prev = new Node();
@@ -164,6 +172,107 @@ void	deleteNode(Node **head_ref, int key)
     free(temp);  // Free memory
 }
 
+// Write a function to delete a linked list
+void    deleteNode(Node **head)
+{
+    // Im gonna start by adding a pointer to the head
+    Node *current = *head;
+
+    // Also i need another one to reserve the next one's address
+    Node *next;
+
+    // I will iterate over the linked list and check for the NULL value
+    while (current != NULL)
+    {
+        // A pointer to the next item cause we gonna lost it if we freed our current
+        next = current->next;
+
+        //free our current
+        free(current);
+
+        // Advance our current pointer to the next Node
+        current = next;
+    }
+
+    // Here we must put a NULL at the end of the linked list to say that we r done
+    *head = NULL;
+}
+
+// I'm gonna try to implement a function to find the length of a linked list
+int    findLength(Node **head)
+{
+    // I need a Pointer to my head Node so i can traverse the linked list normally
+    Node *current = *head;
+
+    // The counter that m gonna return
+    ll i = 0;
+
+    // Starting our traverse Until we achieve the NULL
+    while (current != NULL)
+    {
+        i++;
+        current = current->next;
+    }
+
+    // Returning our length
+    return (i);
+}
+
+// I'm gonna try to implement a function to find an item in a linked list
+bool    findItem(Node *head, int item)
+{
+    Node *current = head;
+    while (current != NULL)
+    {
+        if (current->data == item)
+            return true;
+        current = current->next;
+    }
+    return false;
+}
+
+// GetNth element in a linked list
+int     getNth(Node *head, int item)
+{
+    Node *current = head;
+    ll i = 0;
+    while (current != NULL)
+    {
+        if (i = item)
+            return (current->data);
+        i++;
+        current = current->next;
+    }
+    assert(0);
+}
+
+// I'm gonna try implement a function that count how many an item is repeated in a linked list
+int     count(Node *head, int item)
+{
+    Node *current = head;
+    ll i = 0;
+    while (current != NULL)
+    {
+        if (current->data == item)
+            i++;
+        current = current->next;
+    }
+    return (i);
+}
+
+// Okay now m gonna try implement a function to swap two nodes in a given linked list
+void    swapNode(Node **head, int x, int y)
+{
+    Node *current = *head;
+    Node *tmp;
+    while (current != NULL)
+    {
+        if (current->data == x)
+    }
+
+    // To be honest this is a very hard problem i must revistit it later till i finish my work
+    // TODO Dont forget to came back to this function ==> we wont let it beats us
+}
 int     main(void)
 {
 	// let's begin with creating tree nodes
