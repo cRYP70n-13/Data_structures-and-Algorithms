@@ -62,9 +62,10 @@ bool cmp(pair <ll , pair <ll, ll > > &a, pair <ll ,pair <ll, ll > > &b)
 
 // this is the structure of my doubly linked list
 class Node {
-    int data;
-    Node *next;
-    Node *prev;
+    public:
+        int data;
+        Node *next;
+        Node *prev;
 };
 
 // Here i wanna discover this new concepts off data structures
@@ -84,7 +85,7 @@ void    push(Node **head, int new_data)
 
     // change the prev of the head to new_node
     if (*head != NULL)
-        *head->prev = new_node;
+        (*head)->prev = new_node;
 
     // Setting the head to the new node
     *head = new_node;
@@ -110,6 +111,90 @@ void    insertAftr(Node *prev_node, int new_data)
         new_node->next->prev = new_node;
 }
 
+// M gonna try to implement the append function to add an item at the end of the list
+void    append(Node **head, int new_data)
+{
+    Node *new_node = new Node();
+
+    // Puting the data in our new node
+    new_node->data = new_data;
+
+    // Puting the next of our new_node to NULL since it's gonna be the last one
+    new_node->next = NULL;
+
+    // Creating a tmp Node to traverse our list and set it equal to the head
+    Node *current = *head;
+
+    // But now we need to check if our list is empty
+    if (*head == NULL)
+    {
+        new_node->prev = NULL;
+        *head = new_node;
+        return;
+    }
+
+    // Starting my loop
+    while (current != NULL)
+        current = current->next;
+
+    // we achieved the last node so now we have to change the pointers
+    current->next = new_node;
+    new_node->prev = current;
+
+    return;
+}
+
+// Okay and now i will implement a function that insert a Node after a given one
+void    insertAfter(Node *prev_node, int new_data)
+{
+    Node *new_node = new Node();
+
+    new_node->data = new_data;
+
+    new_node->next = prev_node->next;
+
+    prev_node->next = new_node;
+
+    new_node->prev = prev_node;
+
+    if (new_node->next != NULL)
+        new_node->next->prev = new_node;
+}
+
+void    print_list(Node *node)
+{
+    Node *current;
+    cout << "Traversal in forward direction\n";
+    while (node != NULL)
+    {
+        cout << node->data << endl;
+        current = node;
+        node = node->next;
+    }
+
+    cout << "\nTraversal in reverse direction\n";
+    while (current != NULL)
+    {
+        cout << current->data << endl;
+        current = current->prev;
+    }
+}
+
+// Trying to implement a function to delete a node from our doubly linked list
+void    deleteNode(Node **head, Node *del)
+{
+    if (*head == NULL || del == NULL)
+        return ;
+    if (*head == del)
+        *head = del->next;
+    if (*head->next != NULL)
+        del->next->prev = del->prev;
+    if (del->prev != NULL)
+        del->prev->next = del->next;
+    free(del);
+    return;
+}
+
 // My Main function
 int   main(void)
 {
@@ -117,5 +202,14 @@ int   main(void)
 	cin.tie(NULL);
 	cout.tie(NULL);
 
+    Node *head = NULL;
+    push(&head, 7);
+    push(&head, 1);
+    push(&head, 4);
+
+    insertAfter(head->next, 8);
+
+    cout << "the created DLL is: ";
+    print_list(head);
 	return (0);
 }
