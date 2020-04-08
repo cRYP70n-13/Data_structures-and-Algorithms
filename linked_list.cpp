@@ -280,6 +280,24 @@ void    reverse_list(Node **head)
     *head = prev;
 }
 
+// Implement a recursive function to print the content of a linked list
+void    print(Node *head)
+{
+    if (head == NULL) return;
+    printf("%d", head->data);
+    print(head->next); // this is the recursive part fo my function
+}
+
+// Trying to implement a function to print a linked list in a reverse order using recursion
+// But here to make this function works we need to have a global Node header
+Node *head;
+void    print_rev(Node *p)
+{
+    if (p->next == NULL)
+        head = p; return;
+    print_rev(p->next);
+}
+
 int     main(void)
 {
 	// let's begin with creating tree nodes
