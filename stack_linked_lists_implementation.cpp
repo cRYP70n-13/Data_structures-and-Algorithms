@@ -1,3 +1,4 @@
+#include <climits>
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
@@ -53,13 +54,57 @@ bool cmp(pair <ll , pair <ll, ll > > &a, pair <ll ,pair <ll, ll > > &b)
 	return (a.F < b.F);
 }
 
-// Defining the size of my stack
-#define MAX 1000
-
-class Stack {
-    int top;
+// this is the node's structure of my stack
+class StackNode {
     public:
-        bool
+        int data;
+        StackNode *next;
+};
+
+// try to implement a funcion to create a new Node we gonna need it to build our stack
+StackNode   *newNode(int data)
+{
+    StackNode *newStackNode = new StackNode();
+    newStackNode->data = data;
+    newStackNode->next = NULL;
+    return newStackNode;
+}
+
+// Check if my stack is empty
+int     isEmpty(StackNode *head)
+{
+    return (!head);
+}
+
+// To push the new nodes to my stack
+void    push(StackNode **head, int new_data)
+{
+    StackNode *new_stack_node = new StackNode();
+    new_stack_node->data = new_data;
+    new_stack_node->next = *head;
+    *head = new_stack_node;
+    cout << new_data << " Pushed succesfully to the stack\n";
+}
+
+// to pop from my stack returning the last element in the stack LIFO
+int     pop(StackNode **head)
+{
+    int popped;
+    if (isEmpty(*head))
+        return INT_MIN;
+    StackNode *tmp = *head;
+    *head = (*head)->next;
+    popped = tmp->data;
+    free(tmp);
+    return popped;
+}
+
+// and here i have to implement the peek function to return the top of the stack like pop()
+int     peek(StackNode *head)
+{
+    if (isEmpty(head))
+        return INT_MIN;
+    return head->data;
 }
 
 int   main()
@@ -68,5 +113,14 @@ int   main()
 	cin.tie(NULL);
 	cout.tie(NULL);
 
+    StackNode* root = NULL;
+
+    push(&root, 10);
+    push(&root, 20);
+    push(&root, 30);
+
+    cout << pop(&root) << " popped from stack\n";
+
+    cout << "Top element is " << peek(root) << endl;
 	return (0);
 }
